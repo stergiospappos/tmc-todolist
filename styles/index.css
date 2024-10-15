@@ -1,8 +1,3 @@
-/* Body styling - Prevents overflow */
-body {
-  overflow: hidden;
-}
-
 /* Header styling */
 header {
   min-height: 5vh;
@@ -119,6 +114,9 @@ input.checkbox {
   display: inline-block;
   position: relative;
   cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 
@@ -128,7 +126,8 @@ input.checkbox {
   position: relative;
   height: 32px; /* Size of the checkbox */
   width: 32px; /* Size of the checkbox */
-  background-color: var(--main-color); /* Default background color */
+  background-color: transparent;
+  border: 2px solid var(--main-color);
   border-radius: 4px; /* Optional rounded corners */
   vertical-align: middle;
   transition: background-color 0.2s ease-in-out;

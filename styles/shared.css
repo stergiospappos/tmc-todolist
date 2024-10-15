@@ -8,8 +8,8 @@
 /* Declare all CSS variables in one place for better maintainability */
 :root {
   /* Main and secondary theme colors */
-  --main-color: #071e2e;
-  --secondary-color: #03adea;
+  --main-color: #6c63ff;
+  --secondary-color: #252525;
 
   /* Paragraph font size and spacing */
   --paragraph-min-font-size: 16;
@@ -80,7 +80,7 @@ body {
   font-weight: 300;
   overflow-wrap: anywhere;
   overflow-x: hidden;
-  padding: var(--gutter-vertical) var(--gutter-horizontal);
+  padding: 0 var(--gutter-horizontal);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -132,32 +132,6 @@ body {
   }
 }
 
-/* Header styles */
-header {
-  padding: 10px 0;
-  margin-bottom: 64px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-header ul {
-  list-style: none;
-  display: flex;
-  gap: 10px;
-}
-
-header ul li a {
-  text-decoration: none;
-  color: white;
-  font-weight: 300;
-}
-
-header li a:hover {
-  color: var(--secondary-color);
-  transform: translateY(10px);
-  transition: all 0.4s;
-}
-
 a {
   text-decoration: none;
   color: inherit;
@@ -168,87 +142,4 @@ a {
   display: flex;
   gap: var(--gutter-vertical);
   justify-content: space-between;
-}
-
-/* Button styles */
-.btn {
-  font-size: 16px;
-  font-weight: 400;
-  padding: 12px 48px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-}
-
-/* Light button variant */
-.fill-btn {
-  background-color: var(--secondary-color);
-}
-.fill-btn:hover {
-  background-color: white;
-  color: var(--secondary-color);
-}
-/* Dark button variant */
-.outline-btn {
-  background-color: var(--main-color);
-  color: var(--secondary-color);
-  border: 1px solid var(--secondary-color);
-}
-.outline-btn:hover {
-  background-color: var(--secondary-color);
-  color: white;
-}
-
-/* Button container with spacing */
-.btn-container {
-  margin-top: 32px;
-  margin-bottom: 32px;
-  display: flex;
-  gap: 10px;
-}
-
-/* Logo styling */
-.logo {
-  font-size: clamp(1.3rem, 1.6827rem + 1.4103vw, 1.575rem);
-}
-
-/* Footer styling */
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
-}
-footer ul {
-  list-style: none;
-  display: flex;
-  gap: 10px;
-}
-
-/* Responsive design for smaller screens */
-@media only screen and (max-width: 768px) {
-  .main {
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-  .image-side svg {
-    width: 100vw !important;
-  }
-  .image-side {
-    width: 100vw !important;
-  }
-  .page-container {
-    padding: 0 2%;
-  }
-}
-
-/* Utility classes for flexible and reusable styles */
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.gap-sm {
-  gap: 10px;
 }

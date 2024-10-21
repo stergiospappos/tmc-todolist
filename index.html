@@ -295,7 +295,7 @@
             class="add-btn btn btn-purple mr-3"
             class="btn btn-primary"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+            data-bs-target="#addModal"
           >
             <span class="filter-icon">
               <svg
@@ -318,10 +318,10 @@
         </div>
         <!-- Button trigger modal -->
 
-        <!-- Modal -->
+        <!-- Add Modal -->
         <div
           class="modal fade"
-          id="exampleModal"
+          id="addModal"
           tabindex="-1"
           role="dialog"
           aria-labelledby="exampleModalLabel"
@@ -350,6 +350,40 @@
             </div>
           </div>
         </div>
+        <!-- End Add Modal -->
+        <!-- Edit Modal -->
+        <div
+          class="modal fade"
+          id="editModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body d-flex justify-content-center flex-column">
+                <p class="text-center">Edit the task bellow:</p>
+                <input class="edit-task" type="text" />
+              </div>
+              <div
+                class="modal-footer d-flex justify-content-center flex-column"
+              >
+                <button type="button" class="btn submit-edit btn-purple">
+                  Confirm Edit
+                </button>
+                <button
+                  type="button "
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close Edit Popup
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Edit Modal -->
       </section>
     </main>
     <footer>
@@ -361,5 +395,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="script.js"></script>
+
+    <script src="map.js"></script>
   </body>
 </html>

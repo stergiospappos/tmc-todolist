@@ -5,6 +5,64 @@
   box-sizing: border-box; /* Apply box-sizing for better padding control */
 }
 
+button {
+  /* Remove default margin and padding */
+  margin: 0;
+  padding: 0;
+
+  /* Reset font and text styles */
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: nowrap;
+
+  /* Remove background and borders */
+  background: none;
+  border: none;
+  box-shadow: none;
+
+  /* Reset button appearance */
+  appearance: none;
+
+  /* Remove outline and set focus style */
+  outline: none;
+  cursor: pointer;
+
+  /* Reset display properties */
+  display: inline-block;
+  vertical-align: middle;
+
+  /* Set transition properties for smooth hover effects */
+  transition: all 0.3s ease;
+
+  /* Reset button for touch devices */
+  -webkit-tap-highlight-color: transparent;
+
+  /* Reset focus ring on Firefox */
+  -moz-focusring {
+    outline: none;
+  }
+}
+
+/* Reset hover, focus, and active states */
+button:hover,
+button:focus,
+button:active {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Optional: You can add custom focus styles for accessibility */
+button:focus-visible {
+  outline: 2px solid blue; /* Change this to your desired focus style */
+}
+
 /* Declare all CSS variables in one place for better maintainability */
 :root {
   /* Main and secondary theme colors */

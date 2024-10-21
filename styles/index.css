@@ -158,11 +158,13 @@ input.checkbox:checked ~ .item-content {
   color: #999 !important;
 }
 
-.task-input {
+.task-input,
+.edit-task {
   outline: 2px solid var(--main-color) !important;
 }
 
-.task-input:focus {
+.task-input:focus,
+.edit-task:focus {
   outline: 2px solid var(--main-color) !important;
 }
 
@@ -170,4 +172,9 @@ input.checkbox:checked ~ .item-content {
   margin-bottom: 0 !important;
   line-height: 1.5 !important;
   font-size: clamp(0.9rem, 1rem + 1.4103vw, 1.2rem);
+}
+
+.delete-btn,
+.edit-btn {
+  cursor: pointer;
 }

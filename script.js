@@ -1,11 +1,52 @@
 let myTasks = []; // Here we will save all tasks
 const tasksContainer = document.querySelector(".added-items"); // Here we find where to add new tasks as HTML elements
 const submitButton = document.querySelector(".submit"); // Here we find the button that is responsible for submiting new tasks
+const submitInput = document.querySelector(".task-input");
+const editInput = document.querySelector(".edit-task");
+const submitEditButton = document.querySelector(".submit-edit");
+let editingTaskId = null; // Store the ID of the task being edited
 
-// Create the HTML structure for the task item
-function createTaskHTML(task, index) {
-  return `
-        <div class="single-item d-flex justify-content-between container-fluid" data-index="${index}">
+submitButton.addEventListener("click", () => {
+  let inputValue = submitInput.value; //Get the input the user has entered in the form
+  myTasks.push({ name: inputValue, id: Math.random(5, 4) }); //Add the input to the array with unique id
+  submitInput.value = ""; //Clear the input
+  showItems(myTasks); //Create HTML to show it to the frontend
+});
+
+function deleteItem(id) {
+  let filteredData = myTasks.filter((item) => {
+    //Get the array and create a new one with everything BUT the id of the selected item
+    return item.id != id;
+  });
+  myTasks = filteredData; //update the original array with the new one
+  showItems(myTasks); //Re-render the list of tasks
+}
+
+// Handle the submit button for editing, ensure the event listener is only attached once
+submitEditButton.removeEventListener("click", submitEdit); // Remove any previous event listener
+submitEditButton.addEventListener("click", submitEdit); // Add a single event listener
+
+function editItem(taskName, id) {
+  editInput.value = taskName; //Show the task name of the form when the modal opens
+  editingTaskId = id; //Get the ID of the task we are trying to edit and store it
+}
+
+function submitEdit() {
+  // Update the task with the new name based on the stored ID
+  myTasks = myTasks.map((task) => {
+    if (task.id === editingTaskId) {
+      return { ...task, name: editInput.value }; // Update task name
+    }
+    return task; // Return unchanged tasks
+  });
+  showItems(myTasks); // Re-render the list of tasks
+}
+
+function showItems(data) {
+  tasksContainer.innerHTML = data
+    .map((item) => {
+      return `
+        <div class="single-item d-flex justify-content-between container-fluid">
             <label class="custom-checkbox d-flex justify-content-center gap-4">
                 <input class="checkbox" type="checkbox" />
                 <span class="custom-checkmark">
@@ -13,20 +54,22 @@ function createTaskHTML(task, index) {
                         <path d="M20 6 9 17l-5-5" />
                     </svg>
                 </span>
-                <p class="item-content task-${index} h5">${task}</p>
+                <p class="item-content h5">${item.name}</p>
             </label>
 
             <div class="icons d-flex justify-content-between gap-2">
                 <button class="edit-btn"
                 data-bs-toggle="modal"
-            data-bs-target="#editModal">
+            data-bs-target="#editModal"
+            onclick="editItem('${item.name}', ${item.id})"
+            >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
                     <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
                     <path d="m15 5 4 4" />
                 </svg>
                 
                 </button>
-                <span class="delete-btn">
+                <span class="delete-btn" onclick="deleteItem(${item.id})">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
                     <path d="M3 6h18" />
                     <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
@@ -38,75 +81,23 @@ function createTaskHTML(task, index) {
             </div>
         </div>
     `;
+    })
+    .join(" ");
 }
 
-//Add a new task
-submitButton.addEventListener("click", function () {
-  const inputField = document.querySelector(".task-input"); // Select the input using its class
-  const inputText = inputField.value.trim(); // Get the input value and trim whitespace
+const searchInput = document.querySelector(".search-input");
+const searchSubmitBtn = document.querySelector(".btn-search");
+const allBtn = document.querySelector(".filter-all");
 
-  if (inputText) {
-    // Check if the input is not empty
-    myTasks.push({ name: inputText, id: Math.random(5, 4) }); // Add the task to the array
-    inputField.value = ""; // Clear the input field
-    tasksContainer.insertAdjacentHTML(
-      "beforeend",
-      createTaskHTML(inputText, myTasks.length - 1)
-    ); // Pass the index of the task
-    deleteTask(); // Attach event listeners for delete buttons
-    editTask(); //Attach event listeners for edit buttons
-  } else {
-    alert("Please enter a task!"); // Alert if input is empty
-  }
-  console.log(myTasks);
+searchSubmitBtn.addEventListener("click", () => {
+  let searchTerm = searchInput.value;
+  let filteredSearchData = myTasks.filter((item) => {
+    return item.name.includes(searchTerm);
+  });
+
+  showItems(filteredSearchData);
 });
 
-// Remove task
-function deleteTask() {
-  const deleteButtons = document.querySelectorAll(".delete-btn");
-  deleteButtons.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const taskElement = this.closest(".single-item"); // Find the closest parent task element
-      const taskIndex = taskElement.getAttribute("data-index"); // Get the index of the task from the attribute
-
-      // Remove the task from the array
-      myTasks.splice(taskIndex, 1);
-
-      // Remove the task from the DOM
-      taskElement.remove();
-
-      // Update data-index attributes for the remaining tasks
-      const remainingTasks = document.querySelectorAll(".single-item");
-      remainingTasks.forEach((task, index) => {
-        task.setAttribute("data-index", index); // Update each task's index after deletion
-      });
-    });
-  });
-}
-
-let selectedItem = null;
-const editInput = document.querySelector(".edit-task");
-
-function editTask() {
-  const editButtons = document.querySelectorAll(".edit-btn");
-  const submitEditButton = document.querySelector(".submit-edit");
-  editButtons.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const taskElement = this.closest(".single-item"); // Find the closest parent task element
-      const taskIndex = taskElement.getAttribute("data-index"); // Get the index of the task from the attribute
-
-      selectedItem = taskIndex;
-      editInput.value = myTasks[taskIndex];
-    });
-  });
-
-  submitEditButton.addEventListener("click", function () {
-    myTasks[selectedItem] = editInput.value;
-  });
-}
-
-//Get Task
-//Get Task Input
-//Add the task input to the input
-//after user changes it push the new change to the array and the input index
-//updatedom
+allBtn.addEventListener("click", () => {
+  showItems(myTasks);
+});

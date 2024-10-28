@@ -1,4 +1,3 @@
-let myTasks = []; // Here we will save all tasks
 const tasksContainer = document.querySelector(".added-items"); // Here we find where to add new tasks as HTML elements
 const submitButton = document.querySelector(".submit"); // Here we find the button that is responsible for submiting new tasks
 const submitInput = document.querySelector(".task-input");
@@ -6,11 +5,17 @@ const editInput = document.querySelector(".edit-task");
 const submitEditButton = document.querySelector(".submit-edit");
 let editingTaskId = null; // Store the ID of the task being edited
 
+let savedTasks = JSON.parse(localStorage.getItem("tasks"));
+
+let myTasks = savedTasks ? savedTasks : []; //we check for saved tasks in local storage
+
 submitButton.addEventListener("click", () => {
   let inputValue = submitInput.value; //Get the input the user has entered in the form
   myTasks.push({ name: inputValue, id: Math.random(5, 4) }); //Add the input to the array with unique id
   submitInput.value = ""; //Clear the input
   showItems(myTasks); //Create HTML to show it to the frontend
+
+  localStorage.setItem("tasks", JSON.stringify(myTasks));
 });
 
 function deleteItem(id) {
@@ -19,6 +24,8 @@ function deleteItem(id) {
     return item.id != id;
   });
   myTasks = filteredData; //update the original array with the new one
+  localStorage.setItem("tasks", JSON.stringify(myTasks));
+
   showItems(myTasks); //Re-render the list of tasks
 }
 
@@ -40,6 +47,7 @@ function submitEdit() {
     return task; // Return unchanged tasks
   });
   showItems(myTasks); // Re-render the list of tasks
+  localStorage.setItem("tasks", JSON.stringify(myTasks));
 }
 
 function showItems(data) {
@@ -101,3 +109,5 @@ searchSubmitBtn.addEventListener("click", () => {
 allBtn.addEventListener("click", () => {
   showItems(myTasks);
 });
+
+showItems(myTasks);

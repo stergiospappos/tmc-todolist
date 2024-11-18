@@ -178,3 +178,8 @@ input.checkbox:checked ~ .item-content {
 .edit-btn {
   cursor: pointer;
 }
+
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}

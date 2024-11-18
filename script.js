@@ -31,7 +31,13 @@ function deleteItem(id) {
 
 // Handle the submit button for editing, ensure the event listener is only attached once
 submitEditButton.removeEventListener("click", submitEdit); // Remove any previous event listener
-submitEditButton.addEventListener("click", submitEdit); // Add a single event listener
+submitEditButton.addEventListener("click", () => {
+  submitEdit();
+  const editModal = bootstrap.Modal.getInstance(
+    document.querySelector("#editModal")
+  );
+  editModal.hide();
+});
 
 function editItem(taskName, id) {
   editInput.value = taskName; //Show the task name of the form when the modal opens
@@ -98,12 +104,18 @@ const searchSubmitBtn = document.querySelector(".btn-search");
 const allBtn = document.querySelector(".filter-all");
 
 searchSubmitBtn.addEventListener("click", () => {
-  let searchTerm = searchInput.value;
+  let searchTerm = searchInput.value.toLowerCase();
   let filteredSearchData = myTasks.filter((item) => {
-    return item.name.includes(searchTerm);
+    return item.name.toLowerCase().includes(searchTerm);
   });
 
   showItems(filteredSearchData);
+});
+
+const modeToggleBtn = document.querySelector(".toggler");
+
+modeToggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
 });
 
 allBtn.addEventListener("click", () => {
